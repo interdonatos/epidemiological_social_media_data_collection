@@ -19,10 +19,10 @@ import string
 import preprocessor as p
 import json
  
-access_token="1349002227113930757-gaeVb8dlP0zEttK8NayAakLEN22gOd"
-access_token_secret="b1Y8CYioe7fzD58zpOXxLXbRawa4zJqXOqxTduCge5qJx"
-consumer_key="RVk7inZDs8fbvEMi8B3r8Cl85"
-consumer_secret="8Fy66bblF51smOnQjxrC7ySgbnuqBWN05KDRSAs3adWxeFziIq"
+access_token="XXX"
+access_token_secret="XXX"
+consumer_key="XXX"
+consumer_secret="XXX"
  
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
