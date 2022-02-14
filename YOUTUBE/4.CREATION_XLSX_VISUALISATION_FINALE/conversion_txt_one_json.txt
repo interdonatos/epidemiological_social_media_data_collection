@@ -1,0 +1,4 @@
+for i in *.txt;do cat $i >> output.json;done
+
+on the json file : 
+- delete ",,", 
