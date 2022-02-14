@@ -25,7 +25,7 @@ is_avail("tBBjJnQpvoM")
 from requests import get # module permetttant d'utiliser le http 
 def get_trans(start_token=""): #Fonction permettant de récuperer le token par page 
   
-  api_key = "AIzaSyDmq_KWyit_TLzHE0EbF7VU2QtNbdb2B4I" #Clé Api fournit par Youtube
+  api_key = "XXX" #Clé Api fournit par Youtube
   #channel_id = "UCZl9utbYlPMssMhgrGUqXZA" # Id de la chaine RTB Youtube
   #channel_id = "UCGAR1p-zHqYAKo2Y1EtMnrg" # Id de la chaine SantépubliqueFrance
   keyword = "avian influenza" #pas une chaine maisq requete youtube Grippe aviaire, test
