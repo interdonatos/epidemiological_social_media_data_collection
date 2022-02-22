@@ -19,10 +19,10 @@ USER NAME Van NAME , a professor of virology at Ghent University in Belgium , an
 #import of the librairies
 from tqdm import tqdm
 import os, glob
-from flair.data import Sentence
-from flair.models import SequenceTagger
-from flair.tokenization import SegtokSentenceSplitter
-from segtok.segmenter import split_single
+#from flair.data import Sentence
+#from flair.models import SequenceTagger
+#from flair.tokenization import SegtokSentenceSplitter
+#from segtok.segmenter import split_single
 import shutil
 import re
 import spacy
@@ -44,12 +44,15 @@ chemin_dossier_transcriptions_normalisees="dossier_txt_tweets_238-2_normalise"
 chemin_dossier_transcriptions_normalisees_anonymisation="dossier_txt_tweets_238-2_normalise_anonymsise"
 
 #copier le dossier original, afin de pouvoir faire les traitements sur un nouveau dossier
-if not os.path.exists(chemin_dossier_transcriptions_normalisees_anonymisation):
-    shutil.copytree(chemin_dossier_transcriptions_normalisees, chemin_dossier_transcriptions_normalisees_anonymisation)
+#if not os.path.exists(chemin_dossier_transcriptions_normalisees_anonymisation):
+#    shutil.copytree(chemin_dossier_transcriptions_normalisees, chemin_dossier_transcriptions_normalisees_anonymisation)
 
-folder_path = (chemin_dossier_transcriptions_normalisees_anonymisation)
+#folder_path = (chemin_dossier_transcriptions_normalisees_anonymisation)
+folder_path = (chemin_dossier_transcriptions_normalisees)
+
 
 for filename in tqdm(glob.glob(os.path.join(folder_path, '*.txt'))):
+    print(filename)
     text=open(filename,encoding="utf-8").read()
     #anonymise user name
     text=re.sub("@[a-zA-Z0-9-_]+","<NAME>",text)
@@ -67,12 +70,20 @@ for filename in tqdm(glob.glob(os.path.join(folder_path, '*.txt'))):
     #Afficher les entités nommés tagués dans le texte, sans problème de tokenisation et d'espace en trop
     final,ch,f,i ="","",False,0 # final = Texte finale, ch = chaine de caractère tampon, f = si une entité nommé a été détéctée, i = position dans les parcours de 'tags'
 
+    #print(doc)
+    #print(tags)
+    """
+    print("=============== TAGS ==============")
+    for i in range(len(tags)):
+       if tags[i,1]=='PERSON':
+          print(tags[i,0],tags[i,1])
+"""
+
     while i < len(doc): #tant que not end of file
-        if tags[i,1]== "PER": #si le mot est tagué "LOC"
+        if tags[i,1]== "PERSON": #si le mot est tagué "LOC"
             if not f: #si n'a pas été détecté comme une entité nommée
                 #ch=ch.strip()
                 ch = tags[i,0] #on écrit le mot
-                
                 f= True
             elif f: #si a été détectée en tant que LOC
                 #ch=ch.strip()
@@ -81,13 +92,14 @@ for filename in tqdm(glob.glob(os.path.join(folder_path, '*.txt'))):
         else:
             if f: #si a été détectée en tant que LOC
                 ch=ch.strip(" ")
-                final+="<NAME>".format(ch) #annotation de la loc
+                final+="<NAME> ".format(ch) #annotation de la loc
                 f=False             
             final+=tags[i,0] #concaténation du résultat dans final
         i+=1
 
     #ECRITURE SUR LES FICHIERS
-    open(filename,'w',encoding="utf-8").write(final) #les articles sont tagués par spacy et écrits dans les fichiers
+    #open(filename+"_anon.txt",'w',encoding="utf-8").write(final) #les articles sont tagués par spacy et écrits dans les fichiers
+    open(os.path.join(chemin_dossier_transcriptions_normalisees_anonymisation,os.path.basename(filename)),'w',encoding="utf-8").write(final) #les articles sont tagués par spacy et écrits dans les fichiers
     print(final)
     
     """
