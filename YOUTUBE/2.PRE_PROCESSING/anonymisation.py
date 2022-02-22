@@ -68,7 +68,7 @@ for filename in tqdm(glob.glob(os.path.join(folder_path, '*.txt'))):
     final,ch,f,i ="","",False,0 # final = Texte finale, ch = chaine de caractère tampon, f = si une entité nommé a été détéctée, i = position dans les parcours de 'tags'
 
     while i < len(doc): #tant que not end of file
-        if tags[i,1]== "PER": #si le mot est tagué "LOC"
+        if tags[i,1]== "PERSON": #si le mot est tagué "LOC"
             if not f: #si n'a pas été détecté comme une entité nommée
                 #ch=ch.strip()
                 ch = tags[i,0] #on écrit le mot
@@ -81,7 +81,7 @@ for filename in tqdm(glob.glob(os.path.join(folder_path, '*.txt'))):
         else:
             if f: #si a été détectée en tant que LOC
                 ch=ch.strip(" ")
-                final+="<NAME>".format(ch) #annotation de la loc
+                final+="<NAME> ".format(ch) #annotation de la loc
                 f=False             
             final+=tags[i,0] #concaténation du résultat dans final
         i+=1
